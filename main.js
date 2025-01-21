@@ -20,4 +20,4 @@ mongoose.connect(process.env.MONGODB_SRV).then(() => {
 	throw err;
 });
 
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.DEV_BOT_TOKEN);
