@@ -1,0 +1,25 @@
+{
+  "name": "friendly-helper",
+  "version": "2.0.0",
+  "description": "The Friendly Helper Discord Bot",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Splitzenplay",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "i": "^0.3.7",
+    "images-scraper": "^6.4.2",
+    "minecraft-server-util": "^5.3.1",
+    "mongoose": "^6.8.0",
+    "nanoid": "^5.0.9",
+    "node-fetch": "^2.6.7",
+    "npm": "^9.1.2",
+    "npm-check": "^6.0.1",
+    "openai": "^4.77.0"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules
+
+resources/lists/*
+
+!resources/lists/.gitkeep
+
+.env
+
+.vs
+
+.vscode
