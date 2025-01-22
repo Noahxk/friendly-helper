@@ -1,14 +1,21 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events, SlashCommandBuilder } = require('discord.js');
 
 module.exports= {
-	name: '2prps',
-	description: 'Play a game of rock paper scissors with someone else!',
-	async execute(message, args, Discord, client, fetch){
+	data: new SlashCommandBuilder()
+            .setName("2prps")
+            .setDescription("Play rps with someone")
+            .addUserOption(option =>
+                option
+                    .setName("player2")
+                    .setDescription("Who you want to play against")
+                    .setRequired(true)
+            ),
+	async execute(interaction, Discord, client, fetch, perm) {
 
-        const member = message.mentions.users.first();
-        if(!member) return message.channel.send({content: 'You need to mention a user!'});
-        if(member.id == message.author.id) return message.channel.send({content: `You can't play rock paper scissors with yourself! It's boring.`});
-        if (member.bot) return message.channel.send({content: `You can't play rock paper scissors with bots!`});
+        const member = interaction.options.getUser("player2");
+
+        if(member.id == interaction.user.id) return interaction.reply({content: `You cannot play rps with yourself, its depressing.`});
+        if (member.bot) return interaction.reply({content: `Don't bother the bots with your games.`});
 
         const row = new ActionRowBuilder()
         .addComponents(
@@ -36,15 +43,15 @@ module.exports= {
 		const newEmbed = new Discord.EmbedBuilder()
 		.setColor(colour.default)
 		.setTitle('Rock Paper Scissors')
-        .setDescription(`${message.member} and ${member} pick something to play!`)
+        .setDescription(`${interaction.user} and ${member} pick something to play!`)
 		
-		message.channel.send({embeds: [newEmbed], components: [row]});
+		interaction.reply({embeds: [newEmbed], components: [row]});
 
-    const collector = message.channel.createMessageComponentCollector({ time: 15000 });
+    const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
 
     await collector.on('collect', async i => {
 
-        if(i.user.id == message.member.id) {
+        if(i.user.id == interaction.user.id) {
             switch(i.customId) {
                 case 'rock':
                     player1Choice = 'rock';
@@ -81,7 +88,7 @@ module.exports= {
         } else return;
 
         if(RPSWinner == 'p1') {
-            RPSWinner = message.member;
+            RPSWinner = interaction.user;
         } else if(RPSWinner == 'p2') {
             RPSWinner = member;
         }
@@ -90,16 +97,16 @@ module.exports= {
 		.setColor(colour.default)
 		.setTitle('Rock Paper Scissors Results')
         .setDescription(`
-Game between ${message.member} and ${member}
+Game between ${interaction.user} and ${member}
 
-**${message.author.username}:** ${p1co}
+**${interaction.user.username}:** ${p1co}
 **${member.username}:** ${p2co}
         
 **Winner**
 ${RPSWinner}
         `)
 
-        await i.update({embeds: [newEmbed2], components: []})
+        await interaction.editReply({embeds: [newEmbed2], components: []})
         collector.stop();
 
     });
@@ -136,6 +143,6 @@ ${RPSWinner}
         }
     }
 
-		console.log('2 player rock paper scissors command was executed');
+    console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

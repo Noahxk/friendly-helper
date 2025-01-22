@@ -1,13 +1,21 @@
+const { SlashCommandBuilder } = require('discord.js');
+
 module.exports = {
-    name: 'avatar',
-    description: `Sends the mentioned users avatar`,
-    execute(message, args, Discord, client, fetch) {
+    data: new SlashCommandBuilder()
+            .setName("avatar")
+            .setDescription("Get the profile picture of a user")
+            .addUserOption(option =>
+                option
+                    .setName("user")
+                    .setDescription("The user to get the pfp of")
+                    .setRequired(true)
+            ),
+    execute(interaction, Discord, client, fetch, perm) {
 
-        const member = message.mentions.users.first();
-        if(!member) return message.channel.send('You need to mention a member!');
-        const imgURL = member.displayAvatarURL();
+        const user = interaction.options.getUser("user");
+        const imgURL = user.displayAvatarURL();
 
-        message.channel.send({content: imgURL});
-        console.log('Avatar command was executed');
+        interaction.reply({content: imgURL});
+        console.log(`${interaction.user.username} used ${interaction.commandName}`);
     }
 }

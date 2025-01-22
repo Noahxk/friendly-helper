@@ -1,36 +1,30 @@
 const profileModel = require('../../models/profileSchema');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports= {
-	name: 'don',
-	description: 'Either doubles the amount gambled or you lose it',
-	async execute(message, args, Discord, client, fetch){
+	data: new SlashCommandBuilder()
+            .setName("don")
+            .setDescription("Double or Nothing gambling game")
+			.addIntegerOption(option =>
+				option
+					.setName("amount")
+					.setDescription("The amount to gamble")
+					.setRequired(true)
+					.setMinValue(1)
+			),
+	async execute(interaction, Discord, client, fetch, perm) {
 
 		let profileData;
 		try {
-			profileData = await profileModel.findOne({userID: message.author.id});
-			if(!profileData) {
-				let profile = await profileModel.create({
-					userID: message.member.id,
-					username: message.author.username,
-					coins: 100,
-					inventory: [],
-					theme: '#dafffd',
-					cosmetics: [],
-					marriedTo: 'Not Married',
-                    permissionLevel: 1
-				})
-                return message.channel.send({content: 'Creating your profile, please try again!'});
-			}
+			profileData = await profileModel.findOne({userID: interaction.user.id});
 		}
 		catch (err) {
 			console.log(err);
 		}
 
-        if(!args[0]) return message.channel.send({content: 'You need to include an amount to gamble.'});
-        if(isNaN(args[0])) return message.channel.send({content: 'How do you go about gambling that?'});
-		if(args[0] <= 0) return message.channel.send({content: `You can't exactly gamble nothing.`});
-        let gambledMoney = parseInt(args[0]);
-        if(profileData.coins - gambledMoney < 0) return message.channel.send({content: `You don't have enough money to do that.`});
+		let gambledMoney = interaction.options.getInteger("amount");
+
+        if(profileData.coins - gambledMoney < 0) return interaction.reply({content: `You're too poor to gamble this much money.`});
 
         const donData = Math.floor(Math.random() * 2);
         if(donData == 0){
@@ -39,7 +33,7 @@ module.exports= {
 			gambledMoney *= 1;
 
             const response2 = await profileModel.findOneAndUpdate({
-				userID: message.author.id,
+				userID: interaction.user.id,
 			}, {
 				$inc: {
 					coins: gambledMoney
@@ -49,7 +43,7 @@ module.exports= {
         } else {
             donResult = ':x: Nothing :x:';
             const response2 = await profileModel.findOneAndUpdate({
-				userID: message.author.id,
+				userID: interaction.user.id,
 			}, {
 				$inc: {
 					coins: -gambledMoney
@@ -66,7 +60,7 @@ module.exports= {
             {name: 'Amount Won', value: `${amountWon} :coin:`}
         )
 		
-		message.channel.send({embeds: [newEmbed]});
-		console.log('Double or Nothing command was executed');
+		interaction.reply({embeds: [newEmbed]});
+		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

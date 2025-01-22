@@ -74,10 +74,9 @@ module.exports= {
 		.setTitle('Bot Fun Commands')
 		.setDescription(`Prefix: /\n**Note:** Underlined commands can be used by Jet.`)
 		.addFields({name: '__Fun Commands__', value: `
-**__Colour__** (random/hexcode) - Will show a random colour or the included hexcode
 **Rps** (rock/paper/scissors) - Play scissors paper rock against a bot (Gives you $15-$20 if you win)
 **2prps** (member) - Play scissors paper rock against someone else
-**GIF** (search query) - Sends a gif from giphy.com (Better than the discord gifs)
+**GIF** (search query) - Sends a gif from giphy.com
 		`})
 
 		const economyEmbed = new Discord.EmbedBuilder()

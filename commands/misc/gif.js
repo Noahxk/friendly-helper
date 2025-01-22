@@ -1,13 +1,19 @@
 require('dotenv').config();
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports= {
-	name: 'gif',
-	description: 'Searches the query on giphy and returns the result',
-	execute(message, args, Discord, client, fetch){
+	data: new SlashCommandBuilder()
+            .setName("gif")
+            .setDescription("Fetches a gif from giphy.com")
+			.addStringOption(option =>
+				option
+					.setName("query")
+					.setDescription("What to search for on giphy.com")
+					.setRequired(true)
+			),
+	execute(interaction, Discord, client, fetch, perm) {
 
-		if(!args[0]) return message.channel.send({content: 'You need to include something to search Giphy with!'});
-		const query = args.join(' ');
-		console.log(`Gif command was executed and the search query was: ${query}`);
+		const query = interaction.options.getString("query");
 
 		function sendApiRequest() {
 			const giphyApiKey = process.env.GIPHY_TOKEN;
@@ -18,12 +24,11 @@ module.exports= {
 			})
 			.then(function(json){
 				imgPath = json.data[0].images.original.url;
-				message.channel.send(imgPath);
-				message.channel.send({files: ['resources/giphy_attribution_logo.png']});
-				message.delete();
+				interaction.reply({content: imgPath});
 			})
 		}
 
 		sendApiRequest();
+		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

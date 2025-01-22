@@ -1,50 +1,80 @@
 const profileModel = require('../../models/profileSchema');
+const { SlashCommandBuilder, ChannelType } = require('discord.js');
 
 module.exports= {
-	name: 'debug',
-	description: 'A debug command for development',
-	async execute(message, args, Discord, client, fetch, perm){
+	data: new SlashCommandBuilder()
+            .setName("debug")
+            .setDescription("Command to help with debugging")
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName("log")
+					.setDescription("Log a message to the console")
+					.addStringOption(option =>
+						option
+							.setName("message")
+							.setDescription("The message to log")
+							.setRequired(true)
+					)
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName("echo")
+					.setDescription("Send a message to another channel")
+					.addChannelOption(option =>
+						option
+							.setName("channel")
+							.setDescription("The channel to send the message to")
+							.setRequired(true)
+							.addChannelTypes(ChannelType.GuildText)
+					)
+					.addStringOption(option =>
+						option
+							.setName("message")
+							.setDescription("The message to sned to the channel")
+							.setRequired(true)
+					)
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName("dbtest")
+					.setDescription("Test database by fetching profile model of a user")
+					.addUserOption(option =>
+						option
+							.setName("user")
+							.setDescription("The user to get the profile model of")
+							.setRequired(true)
+					)
+			),
+	async execute(interaction, Discord, client, fetch, perm) {
 
-		let profileData;
-		if(message.mentions.members.first()) {
-			profileData = await profileModel.findOne({userID: message.mentions.members.first().id});
-		} else {
-			profileData = await profileModel.findOne({userID: message.author.id});
-		}
-		
-
-		if(perm >= 3){
-
-		const control_arg = args[0];
-
-		switch(control_arg) {
+		switch(interaction.options.getSubcommand()) {
 			case "log":
-				const message_to_log = args.slice(1).join(" ");
-				console.log(message_to_log);
+				const log_message = interaction.options.getString("message");
+				console.log(log_message);
+				interaction.reply({content: "Message Logged"});
 				break;
 			case "echo":
-				const message_to_echo = args.slice(2).join(" ");
-				const echo_channel = message.mentions.channels.first();
-				echo_channel.send({content: message_to_echo});
+				const echo_message = interaction.options.getString("message");
+				const echo_channel = interaction.options.getChannel("channel");
+				echo_channel.send({content: echo_message});
+				interaction.reply({content: "Message Echoed"});
 				break;
 			case "dbtest":
+
+				let profileData;
+				try{
+					profileData = await profileModel.findOne({userID: interaction.options.getUser("user").id});
+				} catch (err) {
+					console.log(err);
+				}
+
 				const newEmbed = new Discord.EmbedBuilder()
 				.setColor(colour.debug)
 				.setTitle('DEBUG MESSAGE')
-				.setDescription(`${profileData}`)
-				message.channel.send({embeds: [newEmbed]});
+				.setDescription(`\`\`\`${profileData}\`\`\``)
+				interaction.reply({embeds: [newEmbed]});
 				break;
-			default: 
-				const newEmbed2 = new Discord.EmbedBuilder()
-				.setColor(colour.debug)
-				.setTitle('DEBUG MESSAGE')
-				.setDescription(`DEBUG MESSAGE`)
-				message.channel.send({embeds: [newEmbed2]});
-			break;
 		}
-			
-		} else {
-			message.channel.send({content: `This command requires at least a level 3 perm.`});
-		}
+		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }
