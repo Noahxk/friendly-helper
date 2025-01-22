@@ -73,7 +73,6 @@ module.exports = async (client, Discord, OpenAI) =>{
             // Handing the name of the tool and the user's message to be processed
             const information = await useTool(response.choices[0].message.tool_calls[0].function.name, message, response, msgProfileData);
     
-            console.log(information);
             // Pushes the model's choice to call a tool into the conversation variable, pushes the tool's information and calls the chat completions function
             messages.push(response.choices[0].message);
             injectToolResponse(information, response, message);

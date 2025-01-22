@@ -1,6 +1,6 @@
 const { ActivityType } = require('discord.js');
 module.exports = (Discord, client) => {
-    console.log('Bot Successfully Initiated')
+    console.log('Bot Online')
     console.log(`${client.user.tag} is online`);
 
     const activities = [

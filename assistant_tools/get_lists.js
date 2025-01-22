@@ -10,8 +10,8 @@ toolToPush = {
 
 async function toolFunction(message, msgProfileData, response) {
 
-    const lists = fs.promises.readdir("resources/lists");
-    return (await lists).join(", ").replace(".txt", "");
+    const lists = (await fs.promises.readdir("resources/lists")).filter(file => file.endsWith(".txt"));
+    return (await lists).join(", ");
 
 }
 
