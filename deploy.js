@@ -24,17 +24,23 @@ for(const folder of command_folders) {
 
 const rest = new REST().setToken(process.env.DEV_BOT_TOKEN);
 
-(async () => {
-	try {
-		console.log(`Started refreshing ${commands.length} application (/) commands.`);
+// client, guild
+// (async () => {
+// 	try {
+// 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-		const data = await rest.put(
-			Routes.applicationGuildCommands("1043282550279381002", "797369241861881896"),
-			{ body: commands },
-		);
+// 		const data = await rest.put(
+// 			Routes.applicationGuildCommands("925622238378606593", "811823088605724672"),
+// 			{ body: commands },
+// 		);
 
-		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-	} catch (error) {
-		console.error(error);
-	}
-})();
+// 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// })();
+
+// client, guild, command
+// rest.delete(Routes.applicationGuildCommand("925622238378606593", "811823088605724672", '1333221294195347495'))
+// 	.then(() => console.log('Successfully deleted guild command'))
+// 	.catch(console.error);

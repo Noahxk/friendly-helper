@@ -61,11 +61,11 @@ module.exports= {
 		.setTitle('Bot Utility Commands')
 		.setDescription(`Prefix: /\n**Note:** Underlined commands can be used by Jet.`)
 		.addFields({name: '__Utility Commands__', value: `
-**Help** (optional category) - Shows this menu
+**Help** - Shows this menu
 **Ping** - Shows if the bot is responsive
-**__Avatar__** (member) - Sends the user's avatar URL
-**__Theme__** (hexcode) - Sets your theme and makes that colour appear on bot messages
-**Giveaway** (join/leave) - Lets you join or leave an active giveaway
+**__Avatar__** - Sends the user's avatar URL
+**__Theme__** - Sets your theme and makes that colour appear on bot messages
+**Giveaway** - Lets you join or leave an active giveaway
 **Debug** - Used for debugging
 		`})
 
@@ -74,9 +74,9 @@ module.exports= {
 		.setTitle('Bot Fun Commands')
 		.setDescription(`Prefix: /\n**Note:** Underlined commands can be used by Jet.`)
 		.addFields({name: '__Fun Commands__', value: `
-**Rps** (rock/paper/scissors) - Play scissors paper rock against a bot (Gives you $15-$20 if you win)
-**2prps** (member) - Play scissors paper rock against someone else
-**GIF** (search query) - Sends a gif from giphy.com
+**Rps** - Play scissors paper rock against a bot (Gives you $15-$20 if you win)
+**2prps** - Play scissors paper rock against someone else
+**GIF** - Sends a gif from giphy.com
 		`})
 
 		const economyEmbed = new Discord.EmbedBuilder()
@@ -84,18 +84,18 @@ module.exports= {
 		.setTitle('Bot Economy Commands')
 		.setDescription(`Prefix: /\n**Note:** Underlined commands can be used by Jet.`)
 		.addFields({name: '__Economy Commands__', value: `
-**__Bal__** (optional member) - Shows you how much money you have or the pinged user's balance
-**Pay** (member) (amount) - Sends that person the specified amount of money
-**__Don__** (amount) - Either doubles the amount or you lose it
-**Shop** (buy/view) (item to buy) - Buys an item from the shop
-**Inv** (optional member) - Shows all the things you have in your inventory or the pinged user's inventory
-**Rob** (member) - Attempts to rob the user, results in either a success or a hefty fine.
+**__Bal__** - Shows you how much money you have or the pinged user's balance
+**Pay** - Sends that person the specified amount of money
+**__Don__** - Either doubles the amount or you lose it
+**Shop** - View or buy something in the shop
+**Inv** - Shows all the things you have in your inventory or the pinged user's inventory
+**Rob** - Attempts to rob the user, results in either a success or a hefty fine
 **Fish** - Lets you fish for money
 **Daily** - Lets you claim your daily money every 24 hours
-**Equip** (cosmetic) - Lets you equip an owned cosmetic role
-**__Slots__** (amount) - Lets you gamble your money on a slot machine, 73x your bet if you win!
+**Equip** - Lets you equip an owned cosmetic role
+**__Slots__** - Lets you gamble your money on a slot machine, 73x your bet if you win
 **__Baltop__** - Shows the balance leaderboard
-**Roulette** (bet) (amount) - European Roulette, 2 to 1 payout on wide bets, 35 to 1 payout on specific numbers
+**Roulette** - European Roulette, 2 to 1 payout on wide bets, 35 to 1 payout on specific numbers
 		`})
 
 		const adminEmbed = new Discord.EmbedBuilder()
@@ -103,12 +103,11 @@ module.exports= {
 		.setTitle('Bot Admin Commands')
 		.setDescription(`Prefix: /\n**Note:** Underlined commands can be used by Jet.`)
 		.addFields({name: '__Admin Commands__', value: `
-**__BotActivity__** (type) (activity) - Sets the bot's activity. Type = Listening, watching, playing
-**BotDown** - Sends a message stating that the channel's bot is unavaliable
+**__BotActivity__** - Sets the bot's activity. Type = Listening, watching, playing
 **__Reboot__** - Reboots the bot
-**__Ban__** (member) - Bans the member from the server
-**__Kick__** (member) - Kicks the member from the server
-**Giveaway** (start/end) (prize) - Used to start or end a giveaway!
+**__Ban__** - Bans the member from the server
+**__Kick__** - Kicks the member from the server
+**Giveaway** - Used to start or end a giveaway
 		`})
 
 		const newEmbed = new Discord.EmbedBuilder()
