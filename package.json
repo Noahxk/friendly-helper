@@ -2,7 +2,7 @@
   "name": "friendly-helper",
   "version": "2.0.0",
   "description": "The Friendly Helper Discord Bot",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

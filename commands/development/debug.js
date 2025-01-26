@@ -49,11 +49,13 @@ module.exports= {
 
 		switch(interaction.options.getSubcommand()) {
 			case "log":
+				if(perm < 2) return interaction.reply({content: "Error: You need at least permission level 2"});
 				const log_message = interaction.options.getString("message");
 				console.log(log_message);
 				interaction.reply({content: "Message Logged"});
 				break;
 			case "echo":
+				if(perm < 2) return interaction.reply({content: "Error: You need at least permission level 2"});
 				const echo_message = interaction.options.getString("message");
 				const echo_channel = interaction.options.getChannel("channel");
 				echo_channel.send({content: echo_message});

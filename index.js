@@ -1,5 +1,5 @@
 import chalk from "chalk";
-console.log(chalk.blue("System"), chalk.white(">>"), chalk.green("Importing Dependencies.."));
+console.log(chalk.blue("System"), chalk.white(">>"), chalk.green("Importing Dependencies..."));
 
 // Import loads of stuff because its needed apparently
 import { createRequire } from "module";
@@ -48,5 +48,5 @@ await client.login(process.env.DEV_BOT_TOKEN).then(() => {
 	console.log(chalk.blue("System"), chalk.cyan("Client"), chalk.white(">>"), chalk.green("Client logged in"));
 	console.log(chalk.blue("System"), chalk.white(">>"), chalk.green("Online"));
 }).catch((err) => {
-	console.log(chalk.blue("System"), chalk.cyan("Client"), chalk.white(">>"), chalk.red("Could not loggin"));
+	console.log(chalk.blue("System"), chalk.cyan("Client"), chalk.white(">>"), chalk.red("Could not log in"));
 });
