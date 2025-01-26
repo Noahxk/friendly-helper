@@ -1,6 +1,6 @@
 const { ActivityType } = require('discord.js');
 module.exports = (Discord, client) => {
-    console.log('Bot Online')
+    console.log('Bot Online');
 
     const activities =  require("../../resources/activities.json").activities;
     changeActivity();
