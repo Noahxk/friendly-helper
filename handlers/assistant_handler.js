@@ -14,13 +14,10 @@ module.exports = async (client, Discord, OpenAI) =>{
     // Declaring the tools the model can use. Imports them from the tools directory
     const tools = [];
     fs.readdir("assistant_tools", (err, files) => {
-        assistant_tools_loaded = 0;
         files.forEach(file =>{
             const toolToPush = require(`./../assistant_tools/${file}`).toolToPush;
             tools.push(toolToPush);
-            assistant_tools_loaded++;
         });
-        console.log(`${assistant_tools_loaded}/${files.length} Assistant Tools Online`);
     });
 
     function useTool(tool, message, response, msgProfileData) {
@@ -37,7 +34,7 @@ module.exports = async (client, Discord, OpenAI) =>{
             tool_call_id: response.choices[0].message.tool_calls[0].id,
         };
 
-        if(response.choices[0].message.tool_calls[0].function.name == "get_wikipedia_information") {
+        if(response.choices[0].message.tool_calls[0].function.name == "get_wikipedia_information" || response.choices[0].message.tool_calls[0].function.name == "get_urban_dictionary_definition") {
             toolResponse.wiki = true;
             toolResponse.wikiArticleFor = message.author.id;
         }
