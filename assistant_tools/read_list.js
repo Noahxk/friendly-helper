@@ -25,11 +25,11 @@ async function toolFunction(message, msgProfileData, response) {
     console.log(list_name);
 
     try{
-        const content = fs.promises.readFile(`resources/lists/${list_name}`, 'utf8');
-        return content;
+        const content = await fs.promises.readFile(`resources/lists/${list_name}`, 'utf8');
+        return content;  
     } catch (err) {
         console.log(err);
-        return "Error reading list";
+        return undefined;
     }
     
 }
