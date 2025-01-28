@@ -17,7 +17,8 @@
         {"type": "playing", "name": "/fish"},
         {"type": "watching", "name": "the world burn"},
         {"type": "watching", "name": "Jet be unimpressed"},
-        {"type": "listening", "name": "to Michael scream"},
-        {"type": "listening", "name": "to Spotify"}
+        {"type": "listening", "name": "Michael scream"},
+        {"type": "listening", "name": "Spotify"},
+        {"type": "playing", "name": "/tod"}
     ]
 }

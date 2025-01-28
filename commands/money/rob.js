@@ -77,7 +77,7 @@ module.exports = {
 				const newEmbed = new Discord.EmbedBuilder()
 				.setColor(colour.default)
 				.setTitle(`Robbery Unsuccessful`)
-				.setDescription(`The victim had a padlock protecting their balance. You were fined ${fine} :coin:`)
+				.setDescription(`The victim had a padlock protecting their balance. Jet fined you ${fine} :coin:`)
 
 			await profileModel.findOneAndUpdate({
 				userID: interaction.user.id,
@@ -112,7 +112,7 @@ module.exports = {
 			const newEmbed = new Discord.EmbedBuilder()
 				.setColor(colour.default)
 				.setTitle(`Robbery Successful`)
-				.setDescription(`They robbery was unsuccessful and Jet fined you ${fine} :coin:`)
+				.setDescription(`They robbery was successful and you stole ${amount_stolen} :coin:`)
 			interaction.reply({embeds: [newEmbed]});
 
 		} else {
@@ -122,13 +122,6 @@ module.exports = {
 			async function user_has_police_radio() {
 				profileData.inventory.forEach(async item =>{
 					if(item.id == "police radio") {
-						await profileModel.findOneAndUpdate({
-							userID: interaction.user.id,
-						}, {
-							$pull: {
-								inventory: item
-							}
-						});
 						had_radio = true;
 					}
 				});
@@ -149,9 +142,7 @@ module.exports = {
 			const newEmbed = new Discord.EmbedBuilder()
 				.setColor(colour.default)
 				.setTitle(`Robbery Unsuccessful`)
-				.addFields(
-					{name: "Fined", value: `${fine} :coin:`}
-				)
+				.setDescription(`The robbery was unsuccessful and Jet fined you ${fine} :coin:`)
 			interaction.reply({embeds: [newEmbed]});
 
 		}
