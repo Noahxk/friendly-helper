@@ -155,7 +155,11 @@ client.on("messageCreate", async message =>{
         listeningTo.push(message.author.id);
         // conversations.set(message.author.id, defaultConversationVariables());
         user_name = await message.author.username.replace(/[^a-zA-Z0-9]/, '');
-        messages.push({ role: "user", name: user_name, content: message.content});
+
+        // If message contains image
+        const content = message_has_image(message);
+
+        messages.push({ role: "user", name: user_name, content: content});
         chatCompletions(message);
         conversationExpirationTimers.set(message.author.id, setTimeout(() =>{
             endConversation(message);
@@ -166,7 +170,11 @@ client.on("messageCreate", async message =>{
 
         clearTimeout(conversationExpirationTimers.get(message.author.id));
         user_name = await message.author.username.replace(/[^a-zA-Z0-9]/, '');
-        messages.push({ role: "user", name: user_name, content: message.content});
+
+        // If message contains image
+        const content = message_has_image(message);
+
+        messages.push({ role: "user", name: user_name, content: content});
         chatCompletions(message);
         conversationExpirationTimers.set(message.author.id, setTimeout(() =>{
             endConversation(message);
@@ -182,4 +190,26 @@ client.on("messageCreate", async message =>{
     } else return;
 
 });
+
+    function message_has_image(message) {
+        if(message.attachments.size > 0) {
+            const attachment = message.attachments.values().next().value;
+            if(attachment.contentType == "image/jpeg" || attachment.contentType == "image/png") {
+                return [
+                        {type: "text", text: message.content},
+                        {
+                            type: "image_url",
+                            image_url: {
+                                url: attachment.url
+                            }
+                        }
+                    ];
+            } else {
+                return message.content;
+            }
+        } else {
+            return message.content;
+        }
+    }
+
 }
