@@ -1,5 +1,7 @@
+const options = require("../../resources/options.json");
+
 module.exports = async (Discord, client, member) => {
-    const channel = client.channels.cache.get('811823088605724675');
+    const channel = client.channels.cache.get(options.channels.general);
     //811823088605724675
 
     const newEmbed = new Discord.EmbedBuilder()

@@ -2,6 +2,8 @@ const fs = require('fs');
 
 const profileModel = require('../models/profileSchema');
 
+const options = require("../resources/options.json");
+
 module.exports = async (client, Discord, OpenAI) =>{
 
     // Essentially logging into the openai api
@@ -9,7 +11,7 @@ module.exports = async (client, Discord, OpenAI) =>{
         apiKey: process.env.OPENAI_TOKEN
     });
 
-    const assistantName = "Jet";
+    const assistantName = options.assistant_name;
 
     // Declaring the tools the model can use. Imports them from the tools directory
     const tools = [];
@@ -194,7 +196,7 @@ client.on("messageCreate", async message =>{
     function message_has_image(message) {
         if(message.attachments.size > 0) {
             const attachment = message.attachments.values().next().value;
-            if(attachment.contentType == "image/jpeg" || attachment.contentType == "image/png") {
+            if(options.assistant_viewable_image_types.includes(attachment.contentType)) {
                 return [
                         {type: "text", text: message.content},
                         {

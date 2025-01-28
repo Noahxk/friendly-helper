@@ -10,6 +10,7 @@ require('dotenv').config();
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers], partials: [Partials.Channel] });
 const mongoose = require('mongoose');
 const OpenAI = require("openai");
+const options = require("./resources/options.json");
 
 // Create discord collections for commands and events
 client.commands = new Discord.Collection();
@@ -32,7 +33,7 @@ console.log("");
 console.log(chalk.blue("Dependancy"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.green("Establishing..."));
 
 // Establish a connection to the MongoDB database
-mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', options.mongodb_strict_input);
 await mongoose.connect(process.env.MONGODB_SRV).then(() => {
 	console.log(chalk.blue("Dependancy"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.green("Connected"));
 }).catch((err) => {

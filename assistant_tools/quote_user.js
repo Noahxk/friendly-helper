@@ -20,8 +20,9 @@ toolToPush = {
 function toolFunction(message, msgProfileData, response) {
 
     const quote = JSON.parse(response.choices[0].message.tool_calls[0].function.arguments).quote;
+    const options = require("../resources/options.json");
 
-    message.guild.channels.cache.get('1311237908501364746').send({content: quote});
+    message.guild.channels.cache.get(options.channels.quotes).send({content: quote});
     return "Quote sent to quotes channel."
 }
 
