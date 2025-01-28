@@ -19,6 +19,8 @@
         {"type": "watching", "name": "Jet be unimpressed"},
         {"type": "listening", "name": "Michael scream"},
         {"type": "listening", "name": "Spotify"},
-        {"type": "playing", "name": "/tod"}
+        {"type": "playing", "name": "/tod"},
+        {"type": "listening", "name": "Michael screech at Ricky"},
+        {"type": "listening", "name": "Ricky screech at Michael"}
     ]
 }

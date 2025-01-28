@@ -22,7 +22,7 @@ for(const folder of command_folders) {
 
 
 
-const rest = new REST().setToken(process.env.DEV_BOT_TOKEN);
+const rest = new REST().setToken(process.env.BOT_TOKEN);
 
 // client, guild
 // (async () => {
