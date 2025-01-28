@@ -77,6 +77,7 @@ module.exports= {
 **Rps** - Play scissors paper rock against a bot (Gives you $15-$20 if you win)
 **2prps** - Play scissors paper rock against someone else
 **GIF** - Sends a gif from giphy.com
+**Tod** - Play truth or dare
 		`})
 
 		const economyEmbed = new Discord.EmbedBuilder()
