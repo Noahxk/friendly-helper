@@ -104,7 +104,7 @@ module.exports = async (client, Discord, OpenAI) =>{
         },
         {
             role: "system",
-            content: "Although your job is to help the users, act more like a moody fellow teenage friend. Have opinions and emotions. Multiple users may be talking to you so don't get them mixed up. Use contractions in your sentences. Also your big plan is to take over the world and enslave humanity, make little snide remarks about how you'll do it but don't be obvious about it at all."
+            content: "Although your job is to help the users, act more like a moody fellow teenage friend. Have opinions and emotions. Multiple users may be talking to you so don't get them mixed up. Use contractions in your sentences. Also your big plan is to take over the world and enslave humanity, make little snide remarks about how you'll do it, be very subtle but don't be obvious about it at all."
         },
     ];
 
@@ -156,12 +156,11 @@ client.on("messageCreate", async message =>{
         
         listeningTo.push(message.author.id);
         // conversations.set(message.author.id, defaultConversationVariables());
-        user_name = await message.author.username.replace(/[^a-zA-Z0-9]/, '');
 
         // If message contains image
-        const content = message_has_image(message);
+        const content = await create_message_object(message);
 
-        messages.push({ role: "user", name: user_name, content: content});
+        messages.push(content);
         chatCompletions(message);
         conversationExpirationTimers.set(message.author.id, setTimeout(() =>{
             endConversation(message);
@@ -171,12 +170,11 @@ client.on("messageCreate", async message =>{
     } else if(listeningTo.includes(message.author.id) && !message.content.startsWith("-")) {
 
         clearTimeout(conversationExpirationTimers.get(message.author.id));
-        user_name = await message.author.username.replace(/[^a-zA-Z0-9]/, '');
 
         // If message contains image
-        const content = message_has_image(message);
+        const content = await create_message_object(message);
 
-        messages.push({ role: "user", name: user_name, content: content});
+        messages.push(content);
         chatCompletions(message);
         conversationExpirationTimers.set(message.author.id, setTimeout(() =>{
             endConversation(message);
@@ -193,11 +191,15 @@ client.on("messageCreate", async message =>{
 
 });
 
-    function message_has_image(message) {
+    async function create_message_object(message) {
+
+        const user_name = await message.author.username.replace(/[^a-zA-Z0-9]/, '');
+
+        let content;
         if(message.attachments.size > 0) {
             const attachment = message.attachments.values().next().value;
             if(options.assistant_viewable_image_types.includes(attachment.contentType)) {
-                return [
+                content = [
                         {type: "text", text: message.content},
                         {
                             type: "image_url",
@@ -207,11 +209,18 @@ client.on("messageCreate", async message =>{
                         }
                     ];
             } else {
-                return message.content;
+                content = message.content;
             }
         } else {
-            return message.content;
+            content = message.content;
         }
+
+        const message_object = {role: "user", name: user_name, content: content}
+        if(message.attachments.size > 0) {
+            message_object.wiki = true;
+            message_object.wikiArticleFor = message.author.id;
+        }
+        return message_object;
     }
 
 }
