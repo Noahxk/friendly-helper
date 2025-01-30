@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const giveawayModel = require("../../models/giveawaySchema");
 const { nanoid } = require("nanoid");
+const options = require("../../resources/options.json");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -86,7 +87,7 @@ module.exports= {
                         .setFooter({text: `Giveaway ID: ${new_giveaway_id}`})
 
                     interaction.reply({content: "Giveaway Started.", flags: MessageFlags.Ephemeral});
-                    interaction.guild.channels.cache.get("1043332883089215579").send({embeds: [newEmbed]});
+                    interaction.guild.channels.cache.get(options.channels.giveaway).send({embeds: [newEmbed]});
 
                 } else {
                     return interaction.reply({content: "You need at least perm level 2 to start a giveaway."})
@@ -112,7 +113,7 @@ module.exports= {
                         )
                         .setFooter({text: `Giveaway ID: ${giveawayID_end}`})
                     interaction.reply({content: "Giveaway Ended.", flags: MessageFlags.Ephemeral});
-                    interaction.guild.channels.cache.get("1043332883089215579").send({embeds: [newEmbed]});
+                    interaction.guild.channels.cache.get(options.channels.giveaway).send({embeds: [newEmbed]});
 
                     await giveawayModel.findOneAndDelete({giveawayID: giveawayID_end});
                 } else {
