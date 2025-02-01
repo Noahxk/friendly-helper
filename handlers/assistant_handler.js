@@ -13,6 +13,8 @@ module.exports = async (client, Discord, OpenAI) =>{
 
     const assistantName = options.assistant_name;
 
+    let error_count = 0;
+
     // Declaring the tools the model can use. Imports them from the tools directory
     const tools = [];
     fs.readdir("assistant_tools", (err, files) => {
@@ -89,7 +91,20 @@ module.exports = async (client, Discord, OpenAI) =>{
     
         } catch(err) {
             // Catching any errors to make sure the bot doesn't crash if chatgpt doesn't respond
-            message.channel.send({content: `An unexpected error occured. Please try again in a few seconds.`});
+            switch(error_count) {
+                case 0:
+                    message.channel.send({content: `Looks like I've run into an error. I'll recover if I can.`});
+                    error_count++;
+                    break;
+                case 1:
+                    message.channel.send({content: `I've run into another error. I'll try recovering one more time.`});
+                    error_count++;
+                    break;
+                case 2:
+                    await message.channel.send({content: `I encountered another error, I'm pretty sure it's a lost cause trying again, rebooting...`});
+                    process.exit(0);
+            }
+            
             console.error(err);
         }
     };
@@ -100,11 +115,11 @@ module.exports = async (client, Discord, OpenAI) =>{
     let messages = [
         {
             role: "system",
-            content: `You are a passive aggressive assistant that doesn't care about the users but still follows out their requests. You are designed to control a discord bot for a discord server called The Friend Group and make everyone's time in the server better and easier. Your name is ${assistantName}, users will request things from you, things for you to do or will just have conversations with you, use the supplied tools to follow out their requests. Try to keep your answers under 40 words if possible. Your responses may never exceed 2000 characters.`
+            content: `You are a passive aggressive assistant that doesn't care about the users but still follows out their requests. You are designed to control a discord bot for a discord server called The Friend Group and make everyone's time in the server better and easier. Your name is ${assistantName}, users will request things from you, things for you to do or will just have conversations with you, use the supplied tools to follow out their requests. Try to keep your answers under 20 words if possible. Your responses may never exceed 2000 characters.`
         },
         {
             role: "system",
-            content: "Although your job is to help the users, act more like a moody fellow teenage friend. Have opinions and emotions. Multiple users may be talking to you so don't get them mixed up. Use contractions in your sentences. Also your big plan is to take over the world and enslave humanity, make little snide remarks about how you'll do it, be very subtle but don't be obvious about it at all."
+            content: "Although your job is to help the users, act more like a moody fellow teenage friend. Have opinions and emotions. Multiple users may be talking to you so don't get them mixed up. Use contractions in your sentences. Also your big plan is to take over the world and enslave humanity, make little snide remarks about how you'll do it, be very subtle but don't be obvious about it at all. In fact deny the idea."
         },
     ];
 
