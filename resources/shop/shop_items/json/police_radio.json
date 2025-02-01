@@ -1,0 +1,7 @@
+{
+    "id": "police_radio",
+    "display_name": "Police Radio",
+    "description": "A permanent object that gives you a 50% chance of halving the fine when you fail a robbery.",
+    "price": 4000,
+    "type": "item"
+}

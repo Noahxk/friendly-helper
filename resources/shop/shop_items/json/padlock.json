@@ -1,0 +1,7 @@
+{
+    "id": "padlock",
+    "display_name": "Padlock",
+    "description": "A one time use item that prevents you from being robbed.",
+    "price": 2000,
+    "type": "item"
+}
