@@ -12,16 +12,16 @@ module.exports = async (Discord, client, interaction) => {
 			msgProfileData = await profileModel.findOne({userID: interaction.user.id});
 			if(!msgProfileData) {
 				let profile = await profileModel.create({
-					userID: message.author.id,
-					username: message.author.username,
+					userID: interaction.user.id,
+					username: interaction.user.username,
 					coins: 100,
 					inventory: [],
                     theme: '#dafffd',
                     cosmetics: [],
                     marriedTo: 'Not Married',
                     permissionLevel: 1
-				})
-                return;
+				});
+                return interaction.reply({content: "Welcome to the server! I've created a profile for you. You can now use the command you tried again.", flags: MessageFlags.Ephemeral});
 			}
 		}
 		catch (err) {
