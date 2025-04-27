@@ -1,6 +1,7 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require("fs");
+const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -24,13 +25,7 @@ module.exports= {
             ),
 	async execute(interaction, Discord, client, fetch, perm) {
 
-        let profileData;
-		try {
-			profileData = await profileModel.findOne({userID: interaction.user.id});
-			}
-		catch (err) {
-			console.log(err);
-		}
+        const profileData = await profileModelFetcher.fetch(interaction.user.id);
 
         const shop_inventory = new Map();
         const shop_inventory_array = [];
@@ -40,6 +35,7 @@ module.exports= {
             const item_json_files = fs.readdirSync(`resources/shop/${folder}/json`).filter(file => file.endsWith(".json"));
             item_json_files.forEach(file => {
                 const file_object = require(`../../resources/shop/${folder}/json/${file}`);
+                if(file_object.unlisted == true) return;
                 shop_inventory.set(file_object.id, file_object);
                 shop_inventory_array.push(file_object);
             });
@@ -52,7 +48,10 @@ module.exports= {
                 type: item.type
             }
             if(item.type == "cosmetic") obj.roleID = item.roleID;
-            if(item.type == "redeemable") obj.function_file = item.function_file;
+            if(item.type == "redeemable") {
+                obj.function_file = item.function_file;
+                obj.uses = item.uses;
+            }
             return obj;
         }
 

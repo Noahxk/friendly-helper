@@ -1,27 +1,10 @@
 const profileModel = require('../../models/profileSchema');
-const options = require("../../resources/options.json");
+const options = require("../../options.json");
+const profileModelFetcher = require('../../models/fetchers/profileModelFetcher');
 
 module.exports = async (Discord, client, member) => {
 
-    let nmProfileData;
-		try {
-			nmProfileData = await profileModel.findOne({userID: member.id});
-			if(!nmProfileData) {
-				let profile = await profileModel.create({
-					userID: member.id,
-					username: member.user.username,
-					coins: 100,
-					inventory: [],
-                    theme: '#dafffd',
-					cosmetics: [],
-					marriedTo: 'Not Married',
-                    permissionLevel: 1
-				})
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
+	profileModelFetcher.create(member.id);
 
     const channel = client.channels.cache.get(options.channels.general);
 	//811823088605724675
@@ -31,5 +14,5 @@ module.exports = async (Discord, client, member) => {
 		.setTitle(`${member.user.username} has joined the server!`)
         .setDescription('Welcome to The Friend Group! We hope you enjoy the server!')
 		
-		channel.send({content: '<@&820411772917645372>', embeds: [newEmbed]});
+		channel.send({content: `<@&820411772917645372>`, embeds: [newEmbed]});
 }

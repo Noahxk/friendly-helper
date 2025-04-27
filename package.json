@@ -14,8 +14,6 @@
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "i": "^0.3.7",
-    "images-scraper": "^6.4.2",
-    "minecraft-server-util": "^5.3.1",
     "mongoose": "^6.8.0",
     "nanoid": "^5.0.9",
     "node-fetch": "^2.6.7",

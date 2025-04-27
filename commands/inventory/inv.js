@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
+const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -15,13 +16,7 @@ module.exports= {
 
 		if(!interaction.options.getUser("user")) {
 
-        let profileData;
-		try {
-			profileData = await profileModel.findOne({userID: interaction.user.id});
-		}
-		catch (err) {
-			console.log(err);
-		}
+        const profileData = await profileModelFetcher.fetch(interaction.user.id);
 
 			if(profileData.inventory.length != 0){
 				let inv = [];
@@ -46,26 +41,7 @@ module.exports= {
 
 		if (user.bot) return message.channel.send({content: `Bots don't own anything.`})
 
-		let profileData;
-		try {
-			profileData = await profileModel.findOne({userID: user.id});
-			if(!profileData) {
-				let profile = await profileModel.create({
-					userID: user.id,
-					username: user.username,
-					coins: 100,
-                    inventory: [],
-					theme: '#dafffd',
-					cosmetics: [],
-					marriedTo: 'Not Married',
-                    permissionLevel: 1
-				})
-				return interaction.reply({content: 'Creating user profile, please try again!'});
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
+		const profileData = await profileModelFetcher.fetch(user.id);
 
 		if(profileData.inventory.length != 0){
 			let inv = [];

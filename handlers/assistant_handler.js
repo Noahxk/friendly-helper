@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const profileModel = require('../models/profileSchema');
 
-const options = require("../resources/options.json");
+const options = require("../options.json");
 
 module.exports = async (client, Discord, OpenAI) =>{
 

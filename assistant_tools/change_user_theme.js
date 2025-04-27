@@ -12,7 +12,7 @@ toolToPush = {
                 },
                 theme_colour: {
                     type: "string",
-                    description: "The new theme colour for the user. A hex colour code."
+                    description: "The new theme colour for the user. A hex colour code. Never put a # at the start."
                 },
                 personal: {
                     type: "boolean",

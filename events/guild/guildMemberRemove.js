@@ -1,4 +1,4 @@
-const options = require("../../resources/options.json");
+const options = require("../../options.json");
 
 module.exports = async (Discord, client, member) => {
     const channel = client.channels.cache.get(options.channels.general);

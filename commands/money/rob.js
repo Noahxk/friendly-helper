@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
+const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,34 +19,9 @@ module.exports = {
 		if (user.id == interaction.user.id) return interaction.reply({content: `You cannot rob yourself, its too easy.`});
 		if (user.bot) return interaction.reply({content: `Better not.`});
 
-		let profileData;
-		try {
-			profileData = await profileModel.findOne({ userID: interaction.user.id });
-		}
-		catch (err) {
-			console.log(err);
-		}
+		const profileData = profileModelFetcher.fetch(interaction.user.id);
 
-		let profileData2;
-		try {
-			profileData2 = await profileModel.findOne({ userID: user.id });
-			if (!profileData2) {
-				let profile = await profileModel.create({
-					userID: user.id,
-					username: user.username,
-					coins: 100,
-					inventory: [],
-					theme: '#dafffd',
-					cosmetics: [],
-					marriedTo: 'Not Married',
-                    permissionLevel: 1
-				})
-				return interaction.reply('Creating user profile, please try again!');
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
+		const profileData2 = profileModelFetcher.fetch(user.id);
 
 		let fine = parseInt(profileData.coins * 0.1);
 

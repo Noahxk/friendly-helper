@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
+const profileModelFetcher = require('../../models/fetchers/profileModelFetcher');
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -8,13 +9,7 @@ module.exports= {
 	cooldown: 79200,
 	async execute(interaction, Discord, client, fetch, perm) {
 
-		let profileData;
-		try {
-			profileData = await profileModel.findOne({userID: interaction.user.id});
-		}
-		catch (err) {
-			console.log(err);
-		}
+		const profileData = await profileModelFetcher.fetch(interaction.user.id);
 
 		const dailyPay = Math.floor(Math.random() * (291 - 150) + 150);
 

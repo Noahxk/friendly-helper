@@ -9,14 +9,6 @@ module.exports= {
     cooldown: 30,
 	async execute(interaction, Discord, client, fetch, perm) {
 
-        let profileData;
-		try {
-			profileData = await profileModel.findOne({userID: interaction.user.id});
-		}
-		catch (err) {
-			console.log(err);
-		}
-
         const findable_items = {
             common: [
                 {name: "Dirt", price: 10},

@@ -1,5 +1,6 @@
 const { MessageFlags } = require("discord.js");
 const profileModel = require('../../models/profileSchema');
+const profileModelFetcher = require('../../models/fetchers/profileModelFetcher');
 const fetch = require('node-fetch');
 const cooldowns = new Map();
 
@@ -7,26 +8,7 @@ module.exports = async (Discord, client, interaction) => {
 
     if (!interaction.isChatInputCommand()) return;
 
-    let msgProfileData;
-		try {
-			msgProfileData = await profileModel.findOne({userID: interaction.user.id});
-			if(!msgProfileData) {
-				let profile = await profileModel.create({
-					userID: interaction.user.id,
-					username: interaction.user.username,
-					coins: 100,
-					inventory: [],
-                    theme: '#dafffd',
-                    cosmetics: [],
-                    marriedTo: 'Not Married',
-                    permissionLevel: 1
-				});
-                return interaction.reply({content: "Welcome to the server! I've created a profile for you. You can now use the command you tried again.", flags: MessageFlags.Ephemeral});
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
+    const msgProfileData = await profileModelFetcher.fetch(interaction.user.id);
 
 	const command = interaction.client.commands.get(interaction.commandName);
 
@@ -57,12 +39,12 @@ module.exports = async (Discord, client, interaction) => {
 
     colour = {
         default: msgProfileData.theme,
-        server: '#dafffd',
-        admin: '#ff0008',
-        debug: '#000000',
+        server: "dafffd",
+        admin: "ff0008",
+        debug: "000000"
     };
 
-    perm = msgProfileData.permissionLevel;
+    const perm = msgProfileData.permissionLevel;
 
 	try {
 		await command.execute(interaction, Discord, client, fetch, perm);

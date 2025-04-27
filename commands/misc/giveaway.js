@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const giveawayModel = require("../../models/giveawaySchema");
 const { nanoid } = require("nanoid");
-const options = require("../../resources/options.json");
+const options = require("../../options.json");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -57,10 +57,10 @@ module.exports= {
             case "start":
                 if(perm >= 2) {
 
-                    const new_giveaway_id = nanoid(6);
+                    let new_giveaway_id = nanoid(6);
                     const prize = interaction.options.getString("prize");
 
-                    while(await giveawayModel.findOne({giveawayID: new_giveaway_id})) {
+                    if(await giveawayModel.findOne({giveawayID: new_giveaway_id})) {
                         new_giveaway_id = nanoid(6);
                     }
                     

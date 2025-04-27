@@ -7,10 +7,10 @@ const require = createRequire(import.meta.url);
 const Discord = require("discord.js");
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 require('dotenv').config();
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers], partials: [Partials.Channel] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions], partials: [Partials.Channel] });
 const mongoose = require('mongoose');
 const OpenAI = require("openai");
-const options = require("./resources/options.json");
+const options = require("./options.json");
 
 // Create discord collections for commands and events
 client.commands = new Discord.Collection();

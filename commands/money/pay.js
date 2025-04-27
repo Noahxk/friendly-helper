@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
+const profileModelFetcher = require('../../models/fetchers/profileModelFetcher');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,39 +21,13 @@ module.exports = {
 			),
 	async execute(interaction, Discord, client, fetch, perm) {
 
-		let profileData;
-		try {
-			profileData = await profileModel.findOne({ userID: interaction.user.id });
-		}
-		catch (err) {
-			console.log(err);
-		}
+		const profileData = profileModelFetcher.fetch(interaction.user.id);
 
 		const user = interaction.options.getUser("user");
-
-		let profileData2;
-		try {
-			profileData2 = await profileModel.findOne({ userID: user.id });
-			if (!profileData2) {
-				let profile = await profileModel.create({
-					userID: user.id,
-					username: user.username,
-					coins: 100,
-					inventory: [],
-					theme: '#dafffd',
-					cosmetics: [],
-					marriedTo: 'Not Married',
-                    permissionLevel: 1
-				})
-				return interaction.reply({content: "Creating user profile, please try again!"});
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
-
 		if (user.id == interaction.user.id) return interaction.reply({content: `You cannot pay yourself.`});
 		if (user.bot) return interaction.reply({content: `You cannot pay a bot.`})
+
+		const profileData2 = profileModelFetcher.fetch(user.id);
 
 		const money = interaction.options.getInteger("amount");
 

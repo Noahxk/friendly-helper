@@ -21,7 +21,7 @@ module.exports= {
             }
             const regex = /[0-9A-Fa-f]{6}/g;
             if(!theme.match(regex) || theme.length != 6) return interaction.reply({content: "Invalid hexcode."});
-            const themeOutput = '#' + theme;
+            const themeOutput = theme;
 
         const response = await profileModel.findOneAndUpdate({
             userID: interaction.user.id,

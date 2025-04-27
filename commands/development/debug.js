@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder, ChannelType } = require('discord.js');
+const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -63,12 +64,7 @@ module.exports= {
 				break;
 			case "dbtest":
 
-				let profileData;
-				try{
-					profileData = await profileModel.findOne({userID: interaction.options.getUser("user").id});
-				} catch (err) {
-					console.log(err);
-				}
+				const profileData = await profileModelFetcher.fetch(interaction.user.id);
 
 				const newEmbed = new Discord.EmbedBuilder()
 				.setColor(colour.debug)

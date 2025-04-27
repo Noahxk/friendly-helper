@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
+const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -20,13 +21,7 @@ module.exports= {
 			),
 	async execute(interaction, Discord, client, fetch, perm) {
 
-		let profileData;
-		try {
-			profileData = await profileModel.findOne({userID: interaction.user.id});
-		}
-		catch (err) {
-			console.log(err);
-		}
+		const profileData = await profileModelFetcher.fetch(interaction.user.id);
 
 		let bet = interaction.options.getString("bet");
 		const valid_bets = [

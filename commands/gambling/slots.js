@@ -1,5 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
+const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
 
 module.exports= {
 	data: new SlashCommandBuilder()
@@ -15,8 +16,8 @@ module.exports= {
 	async execute(interaction, Discord, client, fetch, perm){
 
         let bet = interaction.options.getInteger("bet");
-        msgProfileData = await profileModel.findOne({userID: interaction.user.id});
-        if(msgProfileData.coins - bet < 0) return interaction.reply({content: "You don't have enough money to gamble that much."});
+        const profileData = await profileModelFetcher.fetch(interaction.user.id);
+        if(profileData.coins - bet < 0) return interaction.reply({content: "You don't have enough money to gamble that much."});
         bet = parseInt(bet);
 
         const slotSymbols = [":watermelon:",":grapes:",":gem:",":four_leaf_clover:",":peach:",":cherries:",":bell:",":seven:",":chocolate_bar:",":apple:",    ":gem:",":lemon:",":bell:",":kiwi:",":coconut:",":lime:",":avocado:",":tomato:",":pineapple:",":melon:"];
