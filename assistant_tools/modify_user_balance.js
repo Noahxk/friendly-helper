@@ -1,3 +1,5 @@
+const profileModelFetcher = require('../models/fetchers/profileModelFetcher');
+
 toolToPush = {
     type: "function",
     function: {
@@ -33,12 +35,7 @@ async function toolFunction(message, mpd, response, client, profileModel) {
 
     if(mpd.permissionLevel >= 3) {
 
-        try{
-            msgProfileData = await profileModel.findOne({userID: id});
-        } catch(err) {
-            console.error(err);
-            return undefined;
-        }
+        const msgProfileData = profileModelFetcher.fetch(id);
 
         switch(modificationType) {
             case "add":

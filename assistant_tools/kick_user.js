@@ -1,3 +1,5 @@
+const profileModelFetcher = require('../models/fetchers/profileModelFetcher');
+
 toolToPush = {
     type: "function",
     function: {
@@ -24,7 +26,7 @@ async function toolFunction(message, mpd, response, client, profileModel) {
 
     if(mpd.permissionLevel >= 2) {
         try{
-            msgProfileData = await profileModel.findOne({userID: id});
+            msgProfileData = await profileModelFetcher.fetch(id);
 
             try{
                 user.kick();

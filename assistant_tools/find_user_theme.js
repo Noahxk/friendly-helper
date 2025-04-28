@@ -1,4 +1,5 @@
 const { Client } = require("discord.js");
+const profileModelFetcher = require('../models/fetchers/profileModelFetcher');
 
 toolToPush = {
     type: "function",
@@ -23,13 +24,8 @@ async function toolFunction(message, mpd, response, client, profileModel) {
 
     const id = JSON.parse(response.choices[0].message.tool_calls[0].function.arguments).account_id;
 
-    try{
-        msgProfileData = await profileModel.findOne({userID: id});
-        return msgProfileData.theme
-    } catch (err){
-        console.error(err);
-        return undefined;
-    }
+    const msgProfileData = await profileModelFetcher.fetch(id);
+    return msgProfileData.theme
 }
 
 exports.toolToPush = toolToPush;

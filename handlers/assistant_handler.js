@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const profileModel = require('../models/profileSchema');
+const profileModelFetcher = require("../models/fetchers/profileModelFetcher");
 
 const options = require("../options.json");
 
@@ -48,13 +49,7 @@ module.exports = async (client, Discord, OpenAI) =>{
 
     async function chatCompletions(message) {
 
-        let msgProfileData;
-    try {
-        msgProfileData = await profileModel.findOne({userID: message.author.id});
-        }
-    catch (err) {
-           console.log(err);
-        }
+        const msgProfileData = await profileModelFetcher.fetch(message.author.id);
 
         try {
             // The actual function, parsing in the model, conversation and avaliable tools
