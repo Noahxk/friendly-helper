@@ -28,6 +28,5 @@ module.exports= {
 		.setFooter({text: 'Come back in 22 hours to claim your money again!'})
 		
 		interaction.reply({embeds: [newEmbed]});
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

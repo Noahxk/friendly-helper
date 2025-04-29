@@ -144,6 +144,5 @@ module.exports= {
 
 				break;
 		}
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

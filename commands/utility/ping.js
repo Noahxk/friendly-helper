@@ -11,6 +11,5 @@ module.exports = {
 		.setTitle('Pong!')
 
         interaction.reply({embeds: [newEmbed]});
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
     }
 }

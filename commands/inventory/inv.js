@@ -63,7 +63,5 @@ module.exports= {
 		} else {
 			return interaction.reply({content: `To be honest I don't know how you got to this message, good job - Noah`});
 		}
-
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

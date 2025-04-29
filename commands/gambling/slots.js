@@ -72,6 +72,5 @@ You Lost: ${bet} :coin:
             }
         }
 
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

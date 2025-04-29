@@ -6,7 +6,7 @@ module.exports= {
             .setDescription("Reboots the bot"),
 	async execute(interaction, Discord, client, fetch, perm) {
 
-		if(perm >= 3){
+		if(perm < 3) return interaction.reply({content: "Insufficient permissions to reboot bot"});
 
 		const newEmbed = new Discord.EmbedBuilder()
 		.setColor(colour.admin)
@@ -17,9 +17,5 @@ module.exports= {
 		await interaction.reply({embeds: [newEmbed]});
 
 		process.exit(0);
-		 
-		} else {
-			interaction.reply({content: "Insufficient permissions to reboot bot"});
-		}
 	}
 }

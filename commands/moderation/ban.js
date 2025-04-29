@@ -40,7 +40,5 @@ module.exports= {
         } else {
             return interaction.reply({content: `You need at least perm level 2. Stop trying to ban people.`});
         }
-
-        console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

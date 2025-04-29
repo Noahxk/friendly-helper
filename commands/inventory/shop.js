@@ -151,6 +151,5 @@ module.exports= {
             newEmbed.addFields({name: "__Cosmetics__", value: fieldText.join("\n")})
             interaction.reply({embeds: [newEmbed]});
         }
-        console.log(`${interaction.user.username} used ${interaction.commandName}`);
     }
 }

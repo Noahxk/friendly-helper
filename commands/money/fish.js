@@ -89,7 +89,6 @@ module.exports= {
         )
 		
 		interaction.followUp({embeds: [newEmbed]});
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
         }
 	}
 }

@@ -37,6 +37,5 @@ module.exports= {
         .setDescription(`Your theme was set to **${themeOutput}**`)
 		
 		interaction.reply({embeds: [newEmbed]});
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

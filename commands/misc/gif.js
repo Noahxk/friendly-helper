@@ -29,6 +29,5 @@ module.exports= {
 		}
 
 		sendApiRequest();
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

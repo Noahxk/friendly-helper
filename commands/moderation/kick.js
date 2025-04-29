@@ -30,7 +30,6 @@ module.exports= {
         )
 		
 		interaction.reply({embeds: [newEmbed]});
-		console.log(`${interaction.user.username} used ${interaction.commandName} to kick ${member.username}`);
         } else {
             return interaction.reply({content: `You need at least a level 2 perm to use this.`});
         }

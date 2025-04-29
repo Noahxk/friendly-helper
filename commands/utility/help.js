@@ -153,7 +153,5 @@ module.exports= {
 			interaction.reply({embeds: [adminEmbed]});
 			} else return interaction.reply({content: `You need at least level 2 perm to view these commands.`});
 		} else return interaction.reply({content: 'Invalid Category'});
-
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

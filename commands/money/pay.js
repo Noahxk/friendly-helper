@@ -55,6 +55,5 @@ module.exports = {
 			.setDescription(`${user} was paid ${money} :coin:`);
 
 		interaction.reply({embeds: [newEmbed]});
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }

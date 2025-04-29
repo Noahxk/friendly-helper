@@ -48,6 +48,7 @@ module.exports = async (Discord, client, interaction) => {
 
 	try {
 		await command.execute(interaction, Discord, client, fetch, perm);
+        console.log(`${interaction.user.id} ${interaction.user.username} : ${interaction.commandName}`);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {

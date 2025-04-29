@@ -128,7 +128,5 @@ module.exports = {
             const res = await axios.get(tod_api_endpoint + type, 10000);
             return await res.data;
         }
-
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
     }
 }

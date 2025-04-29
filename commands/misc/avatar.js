@@ -16,6 +16,5 @@ module.exports = {
         const imgURL = user.displayAvatarURL();
 
         interaction.reply({content: imgURL});
-        console.log(`${interaction.user.username} used ${interaction.commandName}`);
     }
 }

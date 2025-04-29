@@ -37,7 +37,5 @@ module.exports= {
 		.setTitle('Cosmetic Eqipped')
         .setDescription(`You equipped <@&${owned_cosmetics.get(cosmetic_to_equip)}>`)
         interaction.reply({embeds: [newEmbed]});
-
-		console.log(`${interaction.user.username} used ${interaction.commandName}`);
 	}
 }
