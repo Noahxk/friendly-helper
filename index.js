@@ -30,14 +30,14 @@ await ['command_handler', 'event_handler', 'assistant_handler'].forEach(async ha
 })
 
 console.log("");
-console.log(chalk.blue("Dependancy"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.green("Establishing..."));
+console.log(chalk.blue("Dependency"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.green("Establishing..."));
 
 // Establish a connection to the MongoDB database
 mongoose.set('strictQuery', options.mongodb_strict_input);
 await mongoose.connect(process.env.MONGODB_SRV).then(() => {
-	console.log(chalk.blue("Dependancy"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.green("Connected"));
+	console.log(chalk.blue("Dependency"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.green("Connected"));
 }).catch((err) => {
-	console.log(chalk.blue("Dependancy"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.red("Could not connect"));
+	console.log(chalk.blue("Dependency"), chalk.yellow("MongoDB Connection"), chalk.white(">>"), chalk.red("Could not connect"));
 });
 
 console.log("");
