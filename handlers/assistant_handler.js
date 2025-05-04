@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const profileModel = require('../models/profileSchema');
-const profileModelFetcher = require("../models/fetchers/profileModelFetcher");
+const profileModelFetcher = require("../models/fetchers/profileModelManager");
 
 const options = require("../options.json");
 

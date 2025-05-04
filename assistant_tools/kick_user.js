@@ -1,4 +1,4 @@
-const profileModelFetcher = require('../models/fetchers/profileModelFetcher');
+const profileModelFetcher = require('../models/fetchers/profileModelManager');
 
 toolToPush = {
     type: "function",

@@ -1,6 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const options = require("../../options.json");
-const profileModelFetcher = require('../../models/fetchers/profileModelFetcher');
+const profileModelFetcher = require('../../models/fetchers/profileModelManager');
 
 module.exports = async (Discord, client, member) => {
 

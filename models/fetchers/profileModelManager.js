@@ -13,7 +13,6 @@ module.exports = {
             inventory: [],
             theme: 'dafffd',
             cosmetics: [],
-            marriedTo: 'Not Married',
             permissionLevel: 1
         });
         return profileModel.findOne({userID: userID});

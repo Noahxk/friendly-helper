@@ -1,6 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder, ChannelType, ContainerBuilder} = require('discord.js');
-const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
+const profileModelFetcher = require("../../models/fetchers/profileModelManager");
 const { V2ComponentBuilder, V2TextDisplay, V2ContainerBuilder, V2ActionRowBuilder, V2ButtonBuilder, V2Separator } = require("v2componentsbuilder");
 const { ButtonStyle } = require("discord.js");
 

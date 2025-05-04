@@ -1,6 +1,6 @@
 const profileModel = require('../../models/profileSchema');
 const { SlashCommandBuilder } = require('discord.js');
-const profileModelFetcher = require("../../models/fetchers/profileModelFetcher");
+const profileModelFetcher = require("../../models/fetchers/profileModelManager");
 
 module.exports = {
 	data: new SlashCommandBuilder()

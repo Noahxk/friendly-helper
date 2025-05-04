@@ -6,7 +6,6 @@ const profileSchema = new mongoose.Schema({
     inventory: {type: Array},
     theme: {type: String, require: true, default: 'dafffd'},
     cosmetics: {type: Array},
-    marriedTo: {type: String, default: 'Not Married'},
     permissionLevel: {type: Number, default: 1, require: true}
 })
 

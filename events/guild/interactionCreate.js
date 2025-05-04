@@ -1,6 +1,6 @@
 const { MessageFlags } = require("discord.js");
 const profileModel = require('../../models/profileSchema');
-const profileModelFetcher = require('../../models/fetchers/profileModelFetcher');
+const profileModelFetcher = require('../../models/fetchers/profileModelManager');
 const fetch = require('node-fetch');
 const cooldowns = new Map();
 
