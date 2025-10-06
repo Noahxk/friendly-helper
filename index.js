@@ -21,6 +21,7 @@ console.log("");
 
 // Startup the command, event and assistant handlers
 await ['command_handler', 'event_handler', 'assistant_handler'].forEach(async handler => {
+	if(handler == 'assistant_handler' && options.assistant_enabled == false) return;
 	try {
 		await require(`./handlers/${handler}`)(client, Discord, OpenAI);
 		console.log(chalk.blue("System"), chalk.magenta(handler), chalk.white(">>"), chalk.green("Loaded with 0 errors"));
@@ -45,7 +46,7 @@ console.log(chalk.blue("System"), chalk.cyan("Client"), chalk.white(">>"), chalk
 
 // Log the bot client into the discord servers
 
-await client.login(process.env.DEV_BOT_TOKEN).then(() => {
+await client.login(process.env.BOT_TOKEN).then(() => {
 	console.log(chalk.blue("System"), chalk.cyan("Client"), chalk.white(">>"), chalk.green("Client logged in"));
 	console.log(chalk.blue("System"), chalk.white(">>"), chalk.green("Online"));
 }).catch((err) => {
